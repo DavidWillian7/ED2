@@ -80,3 +80,46 @@ class Analyzer:
         dataset_english.append(app)
     
     self.dataset = dataset_english
+
+  def free_apps(self, index):
+    dataset_final = []
+
+    for app in self.dataset:
+      price = app[index]
+      if price == '0' and index == 7:
+        dataset_final.append(app)
+      elif price == '0.0' and index == 4:
+        dataset_final.append(app)
+
+    self.dataset = dataset_final
+
+  def freq_table(self, index):
+    table = {}
+    total = 0
+    
+    for row in self.dataset:
+      total += 1
+      value = row[index]
+      if value in table:
+        table[value] += 1
+      else:
+        table[value] = 1
+    
+    table_percentages = {}
+    for key in table:
+      percentage = (table[key] / total) * 100
+      table_percentages[key] = percentage 
+    
+    return table_percentages
+
+
+  def display_table(self, index):
+    table = self.freq_table(index)
+    table_display = []
+    for key in table:
+      key_val_as_tuple = (table[key], key)
+      table_display.append(key_val_as_tuple)
+        
+    table_sorted = sorted(table_display, reverse = True)
+    for entry in table_sorted:
+      print(entry[1], ':', entry[0])
